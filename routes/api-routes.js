@@ -1,6 +1,7 @@
 // Requiring our models and passport as we've configured it
 var db = require("../models");
 var passport = require("../config/passport");
+// var Listing = require("../models/listing.js")
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -31,6 +32,7 @@ module.exports = function(app) {
     req.logout();
     res.redirect("/");
   });
+// post report information
 
   // Route for getting some data about our user to be used client side
   app.get("/api/user_data", function(req, res) {
@@ -45,5 +47,29 @@ module.exports = function(app) {
         id: req.user.id
       });
     }
+  });
+
+  app.post("/api/list", function(req, res) {
+    // Take the request...
+
+
+    // Create a routeName
+
+    // Using a RegEx Pattern to remove spaces from character.name
+    // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
+
+
+    // Then add the character to the database using sequelize
+    db.Listing.create({
+      person_reporting: req.body.person_reporting,
+      infection_date: req.body.infection_date,
+      prognosis_date: req.body.prognosis_date,
+      incident_description: req.body.incident_description,
+      symptoms_description: req.body.symptoms_description,
+      itinery: req.body.itinery,
+      user_condition: req.body.user_condition,
+    });
+
+    res.status(204).end();
   });
 };
